@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { getCurrentSession } from "@/lib/auth";
+import { UserNav } from "@/components/UserNav";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -6,11 +8,13 @@ export const metadata: Metadata = {
   description: "Cek rekam jejak rekening bank dan nomor WhatsApp sebelum bertransaksi.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await getCurrentSession();
+
   return (
     <html lang="id">
       <body className="min-h-screen bg-slate-50 text-slate-900 antialiased dark:bg-slate-950 dark:text-slate-100">
@@ -23,12 +27,7 @@ export default function RootLayout({
               <a href="/report" className="hover:text-red-600">
                 Lapor Penipuan
               </a>
-              <a
-                href="/login"
-                className="rounded-md bg-slate-900 px-3 py-1.5 text-xs font-semibold text-white hover:bg-slate-800 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-slate-200"
-              >
-                Masuk
-              </a>
+              <UserNav session={session} />
             </nav>
           </div>
         </header>

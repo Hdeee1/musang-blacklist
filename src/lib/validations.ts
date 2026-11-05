@@ -12,6 +12,23 @@ export const searchSchema = z.object({
 
 export type SearchInput = z.infer<typeof searchSchema>;
 
+export const registerSchema = z.object({
+  email: z.string().trim().email("Format email tidak valid").toLowerCase(),
+  password: z
+    .string()
+    .min(8, "Password minimal 8 karakter")
+    .max(72, "Password maksimal 72 karakter"),
+});
+
+export type RegisterInput = z.infer<typeof registerSchema>;
+
+export const loginSchema = z.object({
+  email: z.string().trim().email("Format email tidak valid").toLowerCase(),
+  password: z.string().min(1, "Password wajib diisi"),
+});
+
+export type LoginInput = z.infer<typeof loginSchema>;
+
 export const reportSubmissionSchema = z.object({
   identifierType: z.enum(["bank_account", "whatsapp"]),
   identifierValue: z.string().trim().min(5).max(30),

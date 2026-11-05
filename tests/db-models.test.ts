@@ -41,4 +41,3 @@ describe("Database & Model Data Layer", () => {
     expect(validBankTarget.identifierValue).toMatch(/^[0-9]+$/);
   });
 });
-
