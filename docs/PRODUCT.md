@@ -61,5 +61,5 @@ Dashboard → Antrean laporan → Evaluasi bukti
 
 ## Non-Functional Requirements
 
-- **Privasi**: Dilarang menerima/menyimpan/menampilkan KTP, KK, foto wajah. (Detail → `AGENT_ROOT.md` Hard Rule #1)
+- **Privasi**: Dilarang menerima/menyimpan/menampilkan KTP, KK, foto wajah.
 - **Keamanan Publik**: API pencarian wajib diproteksi Cloudflare + rate-limiting.

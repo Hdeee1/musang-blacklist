@@ -125,3 +125,4 @@ model ModerationLog {
   @@index([reportId])
   @@index([adminId])
 }
+
