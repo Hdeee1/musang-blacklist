@@ -1,0 +1,127 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  BUYER
+  REPORTER
+  ADMIN
+}
+
+enum IdentifierType {
+  BANK_ACCOUNT
+  WHATSAPP
+}
+
+enum BlacklistStatus {
+  BLACKLISTED
+  CLEAN
+  PENDING_REVIEW
+}
+
+enum ReportStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model User {
+  id              String   @id @default(cuid())
+  email           String   @unique
+  passwordHash    String
+  role            Role     @default(REPORTER)
+  reputationScore Int      @default(100)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  submittedReports Report[]        @relation("ReporterRelation")
+  reviewedReports  Report[]        @relation("AdminReviewerRelation")
+  moderationLogs   ModerationLog[] @relation("AdminModeratorRelation")
+
+  @@index([role])
+}
+
+model BlacklistEntry {
+  id              String          @id @default(cuid())
+  identifierType  IdentifierType
+  identifierValue String
+  bankName        String?
+  accountHolder   String?
+  status          BlacklistStatus @default(BLACKLISTED)
+  totalReports    Int             @default(1)
+  lastReportedAt  DateTime        @default(now())
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  reports Report[]
+
+  @@unique([identifierType, identifierValue])
+  @@index([identifierValue])
+  @@index([identifierType, identifierValue])
+  @@index([status])
+}
+
+model Report {
+  id               String       @id @default(cuid())
+  reporterId       String
+  blacklistEntryId String?
+  targetType       IdentifierType
+  targetValue      String
+  bankName         String?
+  chronology       String
+  status           ReportStatus @default(PENDING)
+  rejectionReason  String?
+  reviewedById     String?
+  reviewedAt       DateTime?
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+
+  reporter       User            @relation("ReporterRelation", fields: [reporterId], references: [id], onDelete: Restrict)
+  reviewedBy     User?           @relation("AdminReviewerRelation", fields: [reviewedById], references: [id], onDelete: SetNull)
+  blacklistEntry BlacklistEntry? @relation(fields: [blacklistEntryId], references: [id], onDelete: SetNull)
+
+  evidences      ReportEvidence[]
+  moderationLogs ModerationLog[]
+
+  @@index([status])
+  @@index([targetValue])
+  @@index([reporterId])
+  @@index([blacklistEntryId])
+  @@index([createdAt])
+}
+
+model ReportEvidence {
+  id        String   @id @default(cuid())
+  reportId  String
+  fileUrl   String
+  fileSize  Int
+  mimeType  String
+  createdAt DateTime @default(now())
+
+  report Report @relation(fields: [reportId], references: [id], onDelete: Cascade)
+
+  @@index([reportId])
+}
+
+model ModerationLog {
+  id        String   @id @default(cuid())
+  reportId  String
+  adminId   String
+  action    String
+  notes     String?
+  createdAt DateTime @default(now())
+
+  report Report @relation(fields: [reportId], references: [id], onDelete: Cascade)
+  admin  User   @relation("AdminModeratorRelation", fields: [adminId], references: [id], onDelete: Restrict)
+
+  @@index([reportId])
+  @@index([adminId])
+}

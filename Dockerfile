@@ -4,6 +4,7 @@ RUN corepack enable || npm install -g pnpm@12.16.1
 
 FROM base AS deps
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml* ./
+COPY prisma ./prisma/
 RUN pnpm install --frozen-lockfile
 
 FROM base AS builder
@@ -33,3 +34,4 @@ HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
   CMD wget --no-verbose --tries=1 --spider http://127.0.0.1:3000/ || exit 1
 
 CMD ["node", "server.js"]
+

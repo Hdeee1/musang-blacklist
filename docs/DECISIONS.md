@@ -11,13 +11,14 @@
   - `tests`: Vitest unit and integration tests.
   - `docs`: Dokumentasi produk, arsitektur, dan lisensi aset.
   - `assets`: Aset statis dan lisensi.
-- **Database & Penyimpanan:** PostgreSQL (containerized lokal via docker-compose), migrasi terversi via ORM.
+- **Database & Penyimpanan:** PostgreSQL (containerized lokal via docker-compose), Prisma ORM 6 dengan model relasional (User, BlacklistEntry, Report, ReportEvidence, ModerationLog), singleton client di `src/lib/db.ts`, dan seed dev terpisah.
 - **Autentikasi & State:** Session via cookie `HttpOnly; Secure; SameSite=Lax`, role-based access (`buyer`, `reporter`, `admin`).
 - **Komunikasi & Integrasi:** REST API / Server Actions, validasi skema Zod di boundary, rate limiting untuk endpoint publik.
 
 ## 2. Decision Log
 
-| ID     | Tanggal    | Lingkup          | Keputusan                                                    | Alasan & Batasan (Kenapa)                                                                         | Konsekuensi / Aturan Wajib                                                                |
-| :----- | :--------- | :--------------- | :----------------------------------------------------------- | :------------------------------------------------------------------------------------------------ | :---------------------------------------------------------------------------------------- |
-| ADR-01 | 2026-11-05 | Bootstrap        | Next.js 15 App Router + TypeScript + Tailwind CSS            | Performa SSR/SEO untuk halaman pencarian publik dan DX fullstack terpadu                          | Strict TypeScript aktif, boundary validation via Zod, dilarang menyimpan secret di client |
-| ADR-02 | 2026-11-05 | Database & Infra | PostgreSQL lokal via Docker Compose + multi-stage Dockerfile | Kebutuhan transaksi data laporan penipuan, integritas referensial, dan kemudahan setup `make dev` | Semua skema wajib pakai migrasi terversi, database lokal dijalankan dengan docker-compose |
+| ID     | Tanggal    | Lingkup          | Keputusan                                                                             | Alasan & Batasan (Kenapa)                                                                         | Konsekuensi / Aturan Wajib                                                                |
+| :----- | :--------- | :--------------- | :------------------------------------------------------------------------------------ | :------------------------------------------------------------------------------------------------ | :---------------------------------------------------------------------------------------- |
+| ADR-01 | 2026-11-05 | Bootstrap        | Next.js 15 App Router + TypeScript + Tailwind CSS                                     | Performa SSR/SEO untuk halaman pencarian publik dan DX fullstack terpadu                          | Strict TypeScript aktif, boundary validation via Zod, dilarang menyimpan secret di client |
+| ADR-02 | 2026-11-05 | Database & Infra | PostgreSQL lokal via Docker Compose + multi-stage Dockerfile                          | Kebutuhan transaksi data laporan penipuan, integritas referensial, dan kemudahan setup `make dev` | Semua skema wajib pakai migrasi terversi, database lokal dijalankan dengan docker-compose |
+| ADR-03 | 2026-11-05 | Database ORM     | Prisma ORM 6 dengan model User, BlacklistEntry, Report, ReportEvidence, ModerationLog | Skema relasional terstruktur, strongly-typed client, kemudahan migrasi dan seeding dev terpisah   | Akses database wajib via singleton `src/lib/db.ts`, dilarang query tanpa parameter        |
