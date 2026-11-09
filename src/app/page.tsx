@@ -32,6 +32,22 @@ export default function HomePage() {
             Cari
           </button>
         </form>
+
+        <div className="mt-3 flex flex-wrap items-center justify-center gap-2 text-xs text-slate-500">
+          <span>Contoh cepat:</span>
+          <a
+            href="/search?q=1234567890"
+            className="rounded bg-slate-100 px-2 py-0.5 font-mono text-slate-700 hover:text-red-600 dark:bg-slate-800 dark:text-slate-300"
+          >
+            1234567890 (BCA)
+          </a>
+          <a
+            href="/search?q=08123456789"
+            className="rounded bg-slate-100 px-2 py-0.5 font-mono text-slate-700 hover:text-red-600 dark:bg-slate-800 dark:text-slate-300"
+          >
+            08123456789 (WA)
+          </a>
+        </div>
       </div>
     </div>
   );
