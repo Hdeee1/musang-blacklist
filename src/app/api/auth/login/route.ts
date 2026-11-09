@@ -74,3 +74,4 @@ export async function POST(request: NextRequest) {
     return problemResponse(500, "Internal Server Error", detail, undefined, "/api/auth/login");
   }
 }
+
