@@ -10,6 +10,7 @@ node_modules/
 out/
 build/
 dist/
+public/uploads/
 
 # Environment files
 .env

@@ -44,6 +44,13 @@ export function UserNav({ session }: UserNavProps) {
         </a>
       )}
 
+      <a
+        href="/my-reports"
+        className="text-xs font-medium text-slate-700 hover:text-red-600 dark:text-slate-300 dark:hover:text-red-400"
+      >
+        Laporan Saya
+      </a>
+
       <span className="hidden text-xs text-slate-600 sm:inline dark:text-slate-400">
         {session.email}
       </span>
@@ -57,4 +64,3 @@ export function UserNav({ session }: UserNavProps) {
     </div>
   );
 }
-

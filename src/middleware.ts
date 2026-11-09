@@ -21,8 +21,8 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  // Protect Report route (/report)
-  if (pathname.startsWith("/report")) {
+  // Protect Authenticated User routes (/report, /my-reports)
+  if (pathname.startsWith("/report") || pathname.startsWith("/my-reports")) {
     if (!session) {
       const loginUrl = new URL("/login", request.url);
       loginUrl.searchParams.set("redirect", pathname);
@@ -39,5 +39,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/admin/:path*", "/report", "/login", "/register"],
+  matcher: ["/admin/:path*", "/report", "/my-reports", "/login", "/register"],
 };
