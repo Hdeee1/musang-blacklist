@@ -39,10 +39,23 @@ db-seed:
 	pnpm run db:seed
 
 docker-up:
-	docker compose up -d postgres
+	@if docker compose version >/dev/null 2>&1; then \
+		docker compose up -d postgres; \
+	elif command -v docker-compose >/dev/null 2>&1; then \
+		docker-compose up -d postgres; \
+	else \
+		docker run -d --name musang-postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgrespassword -e POSTGRES_DB=musang_blacklist -p 5432:5432 -v pgdata:/var/lib/postgresql/data --restart unless-stopped postgres:16-alpine; \
+	fi
 
 docker-down:
-	docker compose down
+	@if docker compose version >/dev/null 2>&1; then \
+		docker compose down; \
+	elif command -v docker-compose >/dev/null 2>&1; then \
+		docker-compose down; \
+	else \
+		docker stop musang-postgres 2>/dev/null || true; \
+		docker rm musang-postgres 2>/dev/null || true; \
+	fi
 
 docker-build:
 	docker compose up -d --build
