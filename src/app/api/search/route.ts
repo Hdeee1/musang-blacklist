@@ -1,9 +1,25 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { problemResponse } from "@/lib/api-response";
+import { defaultRateLimiter, getClientIp, getRateLimitHeaders } from "@/lib/rate-limit";
 import { searchBlacklistEntries } from "@/lib/search";
 
 export async function GET(request: NextRequest) {
   try {
+    const clientIp = getClientIp(request.headers);
+    const rateLimit = defaultRateLimiter.check(`search:${clientIp}`);
+    const rateLimitHeaders = getRateLimitHeaders(rateLimit);
+
+    if (!rateLimit.success) {
+      return problemResponse(
+        429,
+        "Too Many Requests",
+        "Batas frekuensi pencarian terlampaui. Silakan coba kembali beberapa saat lagi.",
+        undefined,
+        "/api/search",
+        rateLimitHeaders,
+      );
+    }
+
     const { searchParams } = request.nextUrl;
     const query = searchParams.get("q") || searchParams.get("query");
 
@@ -14,6 +30,7 @@ export async function GET(request: NextRequest) {
         "Kata kunci pencarian minimal 5 karakter (nomor rekening atau nomor WhatsApp).",
         { q: ["Minimal 5 karakter"] },
         "/api/search",
+        rateLimitHeaders,
       );
     }
 
@@ -41,7 +58,10 @@ export async function GET(request: NextRequest) {
           })),
         })),
       },
-      { status: 200 },
+      {
+        status: 200,
+        headers: rateLimitHeaders,
+      },
     );
   } catch (error) {
     const detail = error instanceof Error ? error.message : "Terjadi kesalahan internal";

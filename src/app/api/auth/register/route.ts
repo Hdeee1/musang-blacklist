@@ -3,10 +3,29 @@ import { type NextRequest, NextResponse } from "next/server";
 import { problemResponse } from "@/lib/api-response";
 import { createSessionToken, getSessionCookieOptions, hashPassword } from "@/lib/auth";
 import { prisma } from "@/lib/db";
+import { defaultRateLimiter, getClientIp, getRateLimitHeaders } from "@/lib/rate-limit";
 import { registerSchema } from "@/lib/validations";
 
 export async function POST(request: NextRequest) {
   try {
+    const clientIp = getClientIp(request.headers);
+    const rateLimit = defaultRateLimiter.check(`auth:register:${clientIp}`, {
+      maxRequests: 10,
+      windowMs: 60_000,
+    });
+    const rateLimitHeaders = getRateLimitHeaders(rateLimit);
+
+    if (!rateLimit.success) {
+      return problemResponse(
+        429,
+        "Too Many Requests",
+        "Terlalu banyak permintaan pendaftaran akun. Silakan coba beberapa saat lagi.",
+        undefined,
+        "/api/auth/register",
+        rateLimitHeaders,
+      );
+    }
+
     const json = await request.json();
     const result = registerSchema.safeParse(json);
 

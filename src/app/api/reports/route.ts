@@ -3,6 +3,7 @@ import { type NextRequest, NextResponse } from "next/server";
 import { problemResponse } from "@/lib/api-response";
 import { getCurrentSession } from "@/lib/auth";
 import { prisma } from "@/lib/db";
+import { defaultRateLimiter, getClientIp, getRateLimitHeaders } from "@/lib/rate-limit";
 import { saveEvidenceFile } from "@/lib/storage";
 import {
   MAX_EVIDENCE_FILES,
@@ -13,6 +14,24 @@ import {
 
 export async function POST(request: NextRequest) {
   try {
+    const clientIp = getClientIp(request.headers);
+    const rateLimit = defaultRateLimiter.check(`report:create:${clientIp}`, {
+      maxRequests: 10,
+      windowMs: 60_000,
+    });
+    const rateLimitHeaders = getRateLimitHeaders(rateLimit);
+
+    if (!rateLimit.success) {
+      return problemResponse(
+        429,
+        "Too Many Requests",
+        "Terlalu banyak permintaan pengiriman laporan. Silakan tunggu beberapa saat lagi.",
+        undefined,
+        "/api/reports",
+        rateLimitHeaders,
+      );
+    }
+
     const session = await getCurrentSession();
 
     if (!session) {

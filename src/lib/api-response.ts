@@ -15,6 +15,7 @@ export function problemResponse(
   detail: string,
   errors?: Record<string, string[]>,
   instance?: string,
+  extraHeaders?: Record<string, string>,
 ): NextResponse<ProblemDetails> {
   const body: ProblemDetails = {
     type: "about:blank",
@@ -29,6 +30,7 @@ export function problemResponse(
     status,
     headers: {
       "Content-Type": "application/problem+json",
+      ...(extraHeaders ?? {}),
     },
   });
 }
