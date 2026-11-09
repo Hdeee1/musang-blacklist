@@ -17,6 +17,15 @@ export interface RateLimitResult {
   readonly retryAfter?: number; // Seconds to wait until reset
 }
 
+export const RATE_LIMIT_TIERS = {
+  SEARCH: { maxRequests: 60, windowMs: 60_000 },
+  AUTH: { maxRequests: 10, windowMs: 60_000 },
+  REPORT: { maxRequests: 10, windowMs: 60_000 },
+  GLOBAL: { maxRequests: 120, windowMs: 60_000 },
+} as const;
+
+export type RateLimitTier = keyof typeof RATE_LIMIT_TIERS;
+
 interface RateLimitRecord {
   count: number;
   resetTime: number; // Timestamp in milliseconds
@@ -108,6 +117,29 @@ export const defaultRateLimiter = new MemoryRateLimiter({
 });
 
 /**
+ * Normalizes and strips port numbers from IPv4 / IPv6 addresses.
+ */
+export function sanitizeIp(rawIp: string): string {
+  const trimmed = rawIp.trim();
+
+  // IPv6 with brackets and port, e.g. [2001:db8::1]:8080
+  if (trimmed.startsWith("[")) {
+    const bracketEnd = trimmed.indexOf("]");
+    if (bracketEnd !== -1) {
+      return trimmed.slice(1, bracketEnd);
+    }
+  }
+
+  // IPv4 with port, e.g. 192.168.1.1:8080 (must have exactly one colon)
+  const colonCount = (trimmed.match(/:/g) || []).length;
+  if (colonCount === 1) {
+    return trimmed.split(":")[0] ?? trimmed;
+  }
+
+  return trimmed;
+}
+
+/**
  * Extracts client IP address with priority given to Cloudflare & reverse-proxy headers.
  */
 export function getClientIp(
@@ -115,18 +147,18 @@ export function getClientIp(
 ): string {
   // Cloudflare CF-Connecting-IP
   const cfIp = getHeaderValue(headers, "cf-connecting-ip");
-  if (cfIp) return cfIp.trim();
+  if (cfIp) return sanitizeIp(cfIp);
 
   // Standard X-Forwarded-For (can be comma-separated: client, proxy1, proxy2)
   const xForwardedFor = getHeaderValue(headers, "x-forwarded-for");
   if (xForwardedFor) {
     const firstIp = xForwardedFor.split(",")[0]?.trim();
-    if (firstIp) return firstIp;
+    if (firstIp) return sanitizeIp(firstIp);
   }
 
   // X-Real-IP
   const xRealIp = getHeaderValue(headers, "x-real-ip");
-  if (xRealIp) return xRealIp.trim();
+  if (xRealIp) return sanitizeIp(xRealIp);
 
   return "127.0.0.1";
 }
@@ -161,4 +193,23 @@ export function getRateLimitHeaders(result: RateLimitResult): Record<string, str
   }
 
   return headers;
+}
+
+/**
+ * Checks rate limit for a specific tier.
+ */
+export function checkTierRateLimit(
+  clientIp: string,
+  tier: RateLimitTier,
+  customPrefix?: string,
+): { allowed: boolean; result: RateLimitResult; headers: Record<string, string> } {
+  const prefix = customPrefix ?? tier.toLowerCase();
+  const config = RATE_LIMIT_TIERS[tier];
+  const result = defaultRateLimiter.check(`${prefix}:${clientIp}`, config);
+
+  return {
+    allowed: result.success,
+    result,
+    headers: getRateLimitHeaders(result),
+  };
 }

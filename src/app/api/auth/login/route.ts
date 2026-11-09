@@ -2,26 +2,22 @@ import { type NextRequest, NextResponse } from "next/server";
 import { problemResponse } from "@/lib/api-response";
 import { createSessionToken, getSessionCookieOptions, verifyPassword } from "@/lib/auth";
 import { prisma } from "@/lib/db";
-import { defaultRateLimiter, getClientIp, getRateLimitHeaders } from "@/lib/rate-limit";
+import { checkTierRateLimit, getClientIp } from "@/lib/rate-limit";
 import { loginSchema } from "@/lib/validations";
 
 export async function POST(request: NextRequest) {
   try {
     const clientIp = getClientIp(request.headers);
-    const rateLimit = defaultRateLimiter.check(`auth:login:${clientIp}`, {
-      maxRequests: 10,
-      windowMs: 60_000,
-    });
-    const rateLimitHeaders = getRateLimitHeaders(rateLimit);
+    const rateLimit = checkTierRateLimit(clientIp, "AUTH", "auth:login");
 
-    if (!rateLimit.success) {
+    if (!rateLimit.allowed) {
       return problemResponse(
         429,
         "Too Many Requests",
         "Terlalu banyak percobaan masuk akun. Silakan coba beberapa saat lagi.",
         undefined,
         "/api/auth/login",
-        rateLimitHeaders,
+        rateLimit.headers,
       );
     }
 
