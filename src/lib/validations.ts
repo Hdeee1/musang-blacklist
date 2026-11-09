@@ -69,6 +69,16 @@ export const reportSubmissionSchema = reportInputSchema.extend({
 
 export type ReportSubmissionInput = z.infer<typeof reportSubmissionSchema>;
 
+export const moderationActionSchema = z.object({
+  action: z.enum(["APPROVE", "REJECT"], {
+    errorMap: () => ({ message: "Aksi moderasi harus APPROVE atau REJECT" }),
+  }),
+  notes: z.string().trim().max(1000, "Catatan maksimal 1000 karakter").optional(),
+  isSpam: z.boolean().optional().default(false),
+});
+
+export type ModerationActionInput = z.infer<typeof moderationActionSchema>;
+
 export function validateEvidenceFile(file: { name: string; size: number; type: string }): {
   valid: boolean;
   error?: string;

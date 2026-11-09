@@ -46,4 +46,3 @@ export async function saveEvidenceFile(file: File): Promise<StoredEvidence> {
     filename: uniqueFilename,
   };
 }
-
