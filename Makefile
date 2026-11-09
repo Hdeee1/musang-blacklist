@@ -1,4 +1,4 @@
-.PHONY: setup dev build test lint typecheck format format-fix db-generate db-migrate db-push db-seed clean
+.PHONY: setup dev build test lint typecheck format format-fix db-generate db-migrate db-push db-seed docker-up docker-down docker-build clean
 
 setup:
 	pnpm install
@@ -38,6 +38,14 @@ db-push:
 db-seed:
 	pnpm run db:seed
 
+docker-up:
+	docker compose up -d postgres
+
+docker-down:
+	docker compose down
+
+docker-build:
+	docker compose up -d --build
+
 clean:
 	rm -rf .next out dist coverage
-
