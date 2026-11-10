@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { AlertCircle, ShieldPlus, UserPlus } from "lucide-react";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -17,12 +18,12 @@ export default function RegisterPage() {
     setErrorMessage(null);
 
     if (password !== confirmPassword) {
-      setErrorMessage("Konfirmasi password tidak cocok.");
+      setErrorMessage("Konfirmasi password tidak cocok dengan password yang dimasukkan.");
       return;
     }
 
     if (password.length < 8) {
-      setErrorMessage("Password minimal 8 karakter.");
+      setErrorMessage("Password minimal 8 karakter untuk keamanan akun Anda.");
       return;
     }
 
@@ -38,42 +39,48 @@ export default function RegisterPage() {
       const data = await res.json();
 
       if (!res.ok) {
-        setErrorMessage(data.detail || "Gagal melakukan pendaftaran. Silakan coba lagi.");
+        setErrorMessage(data.detail || "Gagal melakukan pendaftaran. Silakan periksa kembali formulir.");
         return;
       }
 
       router.push("/");
       router.refresh();
     } catch {
-      setErrorMessage("Terjadi gangguan koneksi jaringan.");
+      setErrorMessage("Terjadi gangguan koneksi jaringan saat mencoba mendaftar.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="mx-auto max-w-md py-8">
-      <div className="rounded-2xl border border-border bg-card p-6 sm:p-8 shadow-card">
-        <h1 className="text-2xl font-extrabold tracking-tight text-foreground sm:text-3xl">
-          Buat Akun Baru
-        </h1>
-        <p className="mt-1.5 text-sm text-muted-foreground">
-          Daftar untuk berkontribusi melaporkan rekening & nomor WhatsApp penipu.
-        </p>
+    <div className="mx-auto max-w-md py-6 sm:py-10">
+      <div className="rounded-2xl border border-border bg-card p-6 sm:p-8 shadow-card space-y-6">
+        <div className="text-center space-y-2">
+          <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-xl bg-brand text-brand-foreground shadow-subtle ring-1 ring-border">
+            <UserPlus className="h-5 w-5 text-primary" />
+          </div>
+          <h1 className="text-2xl font-extrabold tracking-tight text-foreground">
+            Buat Akun Pelapor
+          </h1>
+          <p className="text-xs text-muted-foreground leading-relaxed">
+            Daftar untuk berkontribusi melaporkan rekening & nomor WhatsApp penipu secara terverifikasi.
+          </p>
+        </div>
 
         {errorMessage && (
           <div
             role="alert"
-            className="mt-4 rounded-xl border border-destructive/30 bg-destructive/10 p-3.5 text-sm font-semibold text-destructive shadow-soft"
+            className="rounded-xl border border-destructive/40 bg-destructive/10 p-3.5 text-xs text-destructive shadow-subtle flex items-start gap-2"
           >
-            {errorMessage}
+            <AlertCircle className="h-4 w-4 shrink-0 mt-0.5" />
+            <span>{errorMessage}</span>
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-foreground">
-              Email
+            <label htmlFor="email" className="block text-xs font-bold uppercase tracking-wider text-foreground">
+              Alamat Email
             </label>
             <input
               id="email"
@@ -88,7 +95,7 @@ export default function RegisterPage() {
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-foreground">
+            <label htmlFor="password" className="block text-xs font-bold uppercase tracking-wider text-foreground">
               Password (min. 8 karakter)
             </label>
             <input
@@ -104,7 +111,7 @@ export default function RegisterPage() {
           </div>
 
           <div>
-            <label htmlFor="confirm-password" className="block text-sm font-medium text-foreground">
+            <label htmlFor="confirm-password" className="block text-xs font-bold uppercase tracking-wider text-foreground">
               Konfirmasi Password
             </label>
             <input
@@ -122,18 +129,19 @@ export default function RegisterPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full rounded-xl bg-primary py-2.5 text-sm font-bold text-primary-foreground shadow-soft transition hover:bg-primary/90 disabled:opacity-50"
+            className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-primary py-2.5 text-sm font-bold text-primary-foreground shadow-subtle transition hover:opacity-95 disabled:opacity-50"
           >
-            {loading ? "Memproses..." : "Daftar"}
+            <ShieldPlus className="h-4 w-4" />
+            <span>{loading ? "Mendaftarkan Akun..." : "Daftar Akun Baru"}</span>
           </button>
         </form>
 
-        <p className="mt-5 text-center text-xs text-muted-foreground">
-          Sudah punya akun?{" "}
+        <div className="border-t border-border/80 pt-4 text-center text-xs text-muted-foreground">
+          Sudah memiliki akun?{" "}
           <Link href="/login" className="font-semibold text-primary hover:underline">
             Masuk di sini
           </Link>
-        </p>
+        </div>
       </div>
     </div>
   );

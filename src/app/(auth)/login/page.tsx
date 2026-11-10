@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { AlertCircle, Lock, ShieldCheck } from "lucide-react";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -26,42 +27,48 @@ export default function LoginPage() {
       const data = await res.json();
 
       if (!res.ok) {
-        setErrorMessage(data.detail || "Gagal masuk ke akun. Silakan coba lagi.");
+        setErrorMessage(data.detail || "Gagal masuk ke akun. Silakan periksa kembali email dan password.");
         return;
       }
 
       router.push("/");
       router.refresh();
     } catch {
-      setErrorMessage("Terjadi gangguan koneksi jaringan.");
+      setErrorMessage("Terjadi gangguan koneksi jaringan saat mencoba masuk.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="mx-auto max-w-md py-8">
-      <div className="rounded-2xl border border-border bg-card p-6 sm:p-8 shadow-card">
-        <h1 className="text-2xl font-extrabold tracking-tight text-foreground sm:text-3xl">
-          Masuk ke Akun
-        </h1>
-        <p className="mt-1.5 text-sm text-muted-foreground">
-          Masuk untuk melaporkan penipuan atau mengelola data reputasi.
-        </p>
+    <div className="mx-auto max-w-md py-6 sm:py-10">
+      <div className="rounded-2xl border border-border bg-card p-6 sm:p-8 shadow-card space-y-6">
+        <div className="text-center space-y-2">
+          <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-xl bg-brand text-brand-foreground shadow-subtle ring-1 ring-border">
+            <Lock className="h-5 w-5 text-primary" />
+          </div>
+          <h1 className="text-2xl font-extrabold tracking-tight text-foreground">
+            Masuk ke Akun
+          </h1>
+          <p className="text-xs text-muted-foreground leading-relaxed">
+            Masuk untuk mengirimkan laporan penipuan atau memantau status laporan Anda.
+          </p>
+        </div>
 
         {errorMessage && (
           <div
             role="alert"
-            className="mt-4 rounded-xl border border-destructive/30 bg-destructive/10 p-3.5 text-sm font-semibold text-destructive shadow-soft"
+            className="rounded-xl border border-destructive/40 bg-destructive/10 p-3.5 text-xs text-destructive shadow-subtle flex items-start gap-2"
           >
-            {errorMessage}
+            <AlertCircle className="h-4 w-4 shrink-0 mt-0.5" />
+            <span>{errorMessage}</span>
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-foreground">
-              Email
+            <label htmlFor="email" className="block text-xs font-bold uppercase tracking-wider text-foreground">
+              Alamat Email
             </label>
             <input
               id="email"
@@ -76,7 +83,7 @@ export default function LoginPage() {
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-foreground">
+            <label htmlFor="password" className="block text-xs font-bold uppercase tracking-wider text-foreground">
               Password
             </label>
             <input
@@ -94,18 +101,19 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full rounded-xl bg-primary py-2.5 text-sm font-bold text-primary-foreground shadow-soft transition hover:bg-primary/90 disabled:opacity-50"
+            className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-primary py-2.5 text-sm font-bold text-primary-foreground shadow-subtle transition hover:opacity-95 disabled:opacity-50"
           >
-            {loading ? "Memproses..." : "Masuk"}
+            <ShieldCheck className="h-4 w-4" />
+            <span>{loading ? "Memproses Autentikasi..." : "Masuk"}</span>
           </button>
         </form>
 
-        <p className="mt-5 text-center text-xs text-muted-foreground">
-          Belum punya akun?{" "}
+        <div className="border-t border-border/80 pt-4 text-center text-xs text-muted-foreground">
+          Belum memiliki akun?{" "}
           <Link href="/register" className="font-semibold text-primary hover:underline">
             Daftar sekarang
           </Link>
-        </p>
+        </div>
       </div>
     </div>
   );

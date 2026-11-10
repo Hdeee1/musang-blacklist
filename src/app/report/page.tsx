@@ -2,7 +2,17 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { AlertTriangle, CheckCircle2, FileImage, Trash2, UploadCloud } from "lucide-react";
+import {
+  AlertTriangle,
+  Building2,
+  CheckCircle2,
+  FileImage,
+  Lock,
+  MessageSquare,
+  ShieldCheck,
+  Trash2,
+  UploadCloud,
+} from "lucide-react";
 import { MAX_EVIDENCE_FILES, MIN_EVIDENCE_FILES, validateEvidenceFile } from "@/lib/validations";
 
 export default function ReportPage() {
@@ -24,7 +34,7 @@ export default function ReportPage() {
     const combinedFiles = [...files, ...newFiles];
 
     if (combinedFiles.length > MAX_EVIDENCE_FILES) {
-      setErrorMessage(`Maksimal ${MAX_EVIDENCE_FILES} bukti file yang dapat diunggah.`);
+      setErrorMessage(`Maksimal ${MAX_EVIDENCE_FILES} berkas bukti yang dapat diunggah.`);
       return;
     }
 
@@ -36,13 +46,12 @@ export default function ReportPage() {
       });
 
       if (!validation.valid) {
-        setErrorMessage(validation.error || "File tidak memenuhi syarat.");
+        setErrorMessage(validation.error || "Berkas tidak memenuhi syarat.");
         return;
       }
     }
 
     setFiles(combinedFiles);
-    // Reset file input value so re-selecting works
     e.target.value = "";
   };
 
@@ -57,13 +66,13 @@ export default function ReportPage() {
 
     if (files.length < MIN_EVIDENCE_FILES) {
       setErrorMessage(
-        `Wajib melampirkan minimal ${MIN_EVIDENCE_FILES} tangkapan layar bukti transaksi.`,
+        `Wajib melampirkan minimal ${MIN_EVIDENCE_FILES} berkas bukti transfer atau percakapan transaksi.`,
       );
       return;
     }
 
     if (chronology.trim().length < 20) {
-      setErrorMessage("Kronologi kejadian minimal 20 karakter agar jelas dan dapat dievaluasi.");
+      setErrorMessage("Kronologi kejadian minimal 20 karakter agar kronologi dapat dipahami jelas oleh kurator.");
       return;
     }
 
@@ -91,126 +100,141 @@ export default function ReportPage() {
 
       if (!res.ok) {
         setErrorMessage(
-          data.detail || "Gagal mengirimkan laporan. Silakan periksa kembali formulir.",
+          data.detail || "Gagal mengirimkan laporan. Silakan periksa kembali data formulir.",
         );
         return;
       }
 
       setSuccessMessage(
-        "Laporan berhasil dikirim! Laporan Anda telah masuk antrean moderasi dan akan diverifikasi oleh admin sebelum tampil di pencarian publik.",
+        "Laporan Anda telah berhasil diajukan! Berkas masuk ke antrean kurasi dan akan ditinjau oleh tim moderator sebelum dipublikasikan.",
       );
-      // Reset form
       setIdentifierValue("");
       setBankName("");
       setChronology("");
       setFiles([]);
     } catch {
-      setErrorMessage("Terjadi gangguan koneksi saat mengirimkan laporan.");
+      setErrorMessage("Terjadi gangguan koneksi jaringan saat mengirimkan laporan.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="mx-auto max-w-2xl py-6">
-      <div className="mb-6">
-        <h1 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
-          Buat Laporan Penipuan
+    <div className="mx-auto max-w-2xl py-4 sm:py-6 space-y-6">
+      {/* Header */}
+      <div>
+        <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-foreground">
+          Formulir Pelaporan Penipuan
         </h1>
-        <p className="mt-1 text-sm text-muted-foreground">
-          Laporkan nomor rekening bank atau nomor WhatsApp terindikasi penipuan dengan bukti
-          transaksi nyata.
+        <p className="mt-1.5 text-xs sm:text-sm text-muted-foreground leading-relaxed">
+          Laporkan nomor rekening bank atau nomor WhatsApp penipu dengan melampirkan bukti transfer dan bukti percakapan jual beli riil.
         </p>
       </div>
 
-      {/* Privacy Notice Box */}
+      {/* Strict Privacy Shield Box */}
       <div
         role="alert"
-        className="mb-6 rounded-2xl border border-warning/30 bg-warning/10 p-4 text-warning-foreground shadow-soft"
+        className="rounded-xl border border-warning/40 bg-warning/10 p-4 text-warning-foreground shadow-subtle space-y-2"
       >
         <div className="flex items-start gap-3">
-          <AlertTriangle className="h-5 w-5 flex-shrink-0 text-warning mt-0.5" />
-          <div className="text-xs leading-relaxed sm:text-sm">
-            <strong className="font-bold block mb-0.5 text-foreground">
-              PERINGATAN PRIVASI (KEBIJAKAN KETAT):
+          <Lock className="h-5 w-5 text-warning shrink-0 mt-0.5" />
+          <div className="text-xs leading-relaxed space-y-1">
+            <strong className="text-foreground font-bold block">
+              Kebijakan Privasi & Anti-Doxxing (Wajib Dipatuhi):
             </strong>
-            Dilarang mengunggah identitas kependudukan sensitif (<strong>KTP, KK, SIM</strong>) atau
-            foto wajah/selfie orang lain. Laporan wajib murni berfokus pada{" "}
-            <strong>bukti transaksi finansial nyata</strong> (bukti transfer bank, struk
-            ATM/m-banking, dan tangkapan layar percakapan).
+            <p className="text-muted-foreground">
+              Musang Blacklist <strong>menolak keras</strong> pengunggahan foto identitas pribadi (KTP, KK, SIM) maupun foto wajah/selfie orang lain. Laporan wajib berfokus murni pada bukti finansial:
+            </p>
+            <ul className="list-disc list-inside text-muted-foreground space-y-0.5 pt-1">
+              <li>Tangkapan layar mutasi / m-banking / struk transfer ATM</li>
+              <li>Tangkapan layar bukti percakapan transaksi jual beli</li>
+            </ul>
           </div>
         </div>
       </div>
 
+      {/* Success Notification */}
       {successMessage && (
         <div
           role="status"
-          className="mb-6 rounded-2xl border border-success/30 bg-success/10 p-5 text-foreground shadow-soft"
+          className="rounded-xl border border-success/40 bg-success/10 p-5 text-foreground shadow-subtle space-y-3"
         >
           <div className="flex items-start gap-3">
-            <CheckCircle2 className="h-5 w-5 flex-shrink-0 text-success mt-0.5" />
-            <div className="text-sm">
-              <p className="font-bold text-success">Sukses Mengirim Laporan</p>
-              <p className="mt-1 text-xs text-muted-foreground sm:text-sm">{successMessage}</p>
-              <div className="mt-3 flex gap-3">
-                <Link
-                  href="/my-reports"
-                  className="rounded-xl bg-primary px-4 py-1.5 text-xs font-semibold text-primary-foreground shadow-soft hover:bg-primary/90 transition"
-                >
-                  Lihat Riwayat Laporan Saya
-                </Link>
-                <button
-                  type="button"
-                  onClick={() => setSuccessMessage(null)}
-                  className="rounded-xl border border-border px-3.5 py-1.5 text-xs font-medium text-foreground hover:bg-secondary transition"
-                >
-                  Kirim Laporan Lain
-                </button>
-              </div>
+            <CheckCircle2 className="h-5 w-5 text-success shrink-0 mt-0.5" />
+            <div className="space-y-1">
+              <p className="font-bold text-success text-sm">Laporan Berhasil Diajukan</p>
+              <p className="text-xs text-muted-foreground">{successMessage}</p>
+            </div>
+          </div>
+          <div className="flex flex-wrap gap-2 pt-1 pl-8">
+            <Link
+              href="/my-reports"
+              className="rounded-lg bg-primary px-3.5 py-1.5 text-xs font-semibold text-primary-foreground shadow-subtle transition hover:opacity-95"
+            >
+              Lihat Riwayat Laporan Saya
+            </Link>
+            <button
+              type="button"
+              onClick={() => setSuccessMessage(null)}
+              className="rounded-lg border border-border bg-card px-3.5 py-1.5 text-xs font-semibold text-foreground transition hover:bg-secondary"
+            >
+              Kirim Laporan Baru
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Error Notification */}
+      {errorMessage && (
+        <div
+          role="alert"
+          className="rounded-xl border border-destructive/40 bg-destructive/10 p-4 text-destructive shadow-subtle"
+        >
+          <div className="flex items-start gap-2.5">
+            <AlertTriangle className="h-4 w-4 shrink-0 mt-0.5" />
+            <div className="text-xs">
+              <strong className="font-bold block">Gagal Mengirim Laporan:</strong>
+              <p className="mt-0.5 text-destructive-foreground">{errorMessage}</p>
             </div>
           </div>
         </div>
       )}
 
-      {errorMessage && (
-        <div
-          role="alert"
-          className="mb-6 rounded-2xl border border-destructive/30 bg-destructive/10 p-4 text-destructive shadow-soft"
-        >
-          <p className="text-sm font-bold">Gagal Mengirim Laporan</p>
-          <p className="mt-1 text-xs sm:text-sm">{errorMessage}</p>
-        </div>
-      )}
-
+      {/* Main Form Card */}
       <form
         onSubmit={handleSubmit}
-        className="space-y-6 rounded-2xl border border-border bg-card p-6 shadow-card sm:p-8"
+        className="rounded-2xl border border-border bg-card p-6 sm:p-8 shadow-card space-y-6"
       >
-        {/* Identifier Type */}
+        {/* Identifier Type Switcher */}
         <div>
-          <label className="block text-sm font-bold text-foreground">Kategori Data Penipu</label>
-          <div className="mt-2 grid grid-cols-2 gap-3">
+          <label className="block text-xs font-bold text-foreground uppercase tracking-wider mb-2">
+            Pilih Kategori Identitas
+          </label>
+          <div className="grid grid-cols-2 gap-3">
             <button
               type="button"
               onClick={() => setIdentifierType("bank_account")}
-              className={`flex items-center justify-center rounded-xl border p-3 text-sm font-semibold transition ${
+              className={`flex items-center justify-center gap-2 rounded-xl border p-3 text-xs sm:text-sm font-semibold transition ${
                 identifierType === "bank_account"
-                  ? "border-primary bg-primary/10 text-primary shadow-soft"
-                  : "border-border bg-secondary/40 text-muted-foreground hover:bg-secondary hover:text-foreground"
+                  ? "border-primary bg-primary/10 text-primary shadow-subtle"
+                  : "border-border bg-secondary/50 text-muted-foreground hover:bg-secondary hover:text-foreground"
               }`}
             >
-              Nomor Rekening Bank
+              <Building2 className="h-4 w-4" />
+              <span>Nomor Rekening Bank</span>
             </button>
+
             <button
               type="button"
               onClick={() => setIdentifierType("whatsapp")}
-              className={`flex items-center justify-center rounded-xl border p-3 text-sm font-semibold transition ${
+              className={`flex items-center justify-center gap-2 rounded-xl border p-3 text-xs sm:text-sm font-semibold transition ${
                 identifierType === "whatsapp"
-                  ? "border-primary bg-primary/10 text-primary shadow-soft"
-                  : "border-border bg-secondary/40 text-muted-foreground hover:bg-secondary hover:text-foreground"
+                  ? "border-primary bg-primary/10 text-primary shadow-subtle"
+                  : "border-border bg-secondary/50 text-muted-foreground hover:bg-secondary hover:text-foreground"
               }`}
             >
-              Nomor WhatsApp
+              <MessageSquare className="h-4 w-4" />
+              <span>Nomor WhatsApp</span>
             </button>
           </div>
         </div>
@@ -218,8 +242,8 @@ export default function ReportPage() {
         {/* Bank Name (conditional) */}
         {identifierType === "bank_account" && (
           <div>
-            <label htmlFor="bank-name" className="block text-sm font-medium text-foreground">
-              Nama Bank
+            <label htmlFor="bank-name" className="block text-xs font-bold text-foreground uppercase tracking-wider">
+              Nama Bank Penipu
             </label>
             <input
               id="bank-name"
@@ -227,7 +251,7 @@ export default function ReportPage() {
               required
               value={bankName}
               onChange={(e) => setBankName(e.target.value)}
-              placeholder="Contoh: BCA, BRI, Mandiri, BNI, Seabank, Jago..."
+              placeholder="Contoh: BCA, BRI, Mandiri, BNI, Seabank, Bank Jago..."
               className="mt-1.5 block w-full rounded-xl border border-border bg-background px-3.5 py-2.5 text-sm text-foreground outline-none placeholder:text-muted-foreground focus:border-primary focus:ring-1 focus:ring-primary"
             />
           </div>
@@ -235,8 +259,8 @@ export default function ReportPage() {
 
         {/* Identifier Value */}
         <div>
-          <label htmlFor="identifier-value" className="block text-sm font-medium text-foreground">
-            {identifierType === "bank_account" ? "Nomor Rekening Penipu" : "Nomor WhatsApp Penipu"}
+          <label htmlFor="identifier-value" className="block text-xs font-bold text-foreground uppercase tracking-wider">
+            {identifierType === "bank_account" ? "Nomor Rekening Bank" : "Nomor WhatsApp Pelaku"}
           </label>
           <input
             id="identifier-value"
@@ -246,25 +270,30 @@ export default function ReportPage() {
             onChange={(e) => setIdentifierValue(e.target.value)}
             placeholder={
               identifierType === "bank_account"
-                ? "Contoh: 1234567890"
-                : "Contoh: 08123456789 atau +628123456789"
+                ? "Masukkan digit rekening (misal: 1234567890)"
+                : "Masukkan nomor kontak (misal: 08123456789 atau +62812...)"
             }
-            className="mt-1.5 block w-full rounded-xl border border-border bg-background px-3.5 py-2.5 text-sm text-foreground outline-none placeholder:text-muted-foreground focus:border-primary focus:ring-1 focus:ring-primary"
+            className="mt-1.5 block w-full rounded-xl border border-border bg-background px-3.5 py-2.5 text-sm font-mono text-foreground outline-none placeholder:text-muted-foreground placeholder:font-sans focus:border-primary focus:ring-1 focus:ring-primary"
           />
+          <p className="mt-1 text-[11px] text-muted-foreground">
+            {identifierType === "bank_account"
+              ? "Pastikan nomor rekening sesuai dengan tujuan transfer pada bukti slip."
+              : "Bisa format 08xx maupun +62xx, sistem akan menormalisasi secara otomatis."}
+          </p>
         </div>
 
         {/* Chronology */}
         <div>
-          <div className="flex justify-between items-center">
-            <label htmlFor="chronology" className="block text-sm font-medium text-foreground">
-              Kronologi Kejadian Singkat
+          <div className="flex justify-between items-center mb-1">
+            <label htmlFor="chronology" className="block text-xs font-bold text-foreground uppercase tracking-wider">
+              Kronologi Kejadian Transaksi
             </label>
             <span
-              className={`text-xs ${
-                chronology.length < 20 ? "text-warning" : "text-muted-foreground"
+              className={`text-[11px] font-mono ${
+                chronology.length < 20 ? "text-warning font-semibold" : "text-muted-foreground"
               }`}
             >
-              {chronology.length}/2000 karakter (min. 20)
+              {chronology.length} / 2000 (min. 20)
             </span>
           </div>
           <textarea
@@ -273,32 +302,37 @@ export default function ReportPage() {
             rows={4}
             value={chronology}
             onChange={(e) => setChronology(e.target.value)}
-            placeholder="Jelaskan secara ringkas transaksi yang dilakukan, barang/jasa yang dijanjikan, dan bagaimana penipuan terjadi..."
-            className="mt-1.5 block w-full rounded-xl border border-border bg-background px-3.5 py-2.5 text-sm text-foreground outline-none placeholder:text-muted-foreground focus:border-primary focus:ring-1 focus:ring-primary"
+            placeholder="Jelaskan secara ringkas: apa barang/jasa yang ditransaksikan, nominal kerugian, kapan transfer dilakukan, dan bagaimana penjual memutus kontak..."
+            className="block w-full rounded-xl border border-border bg-background p-3 text-xs sm:text-sm text-foreground outline-none placeholder:text-muted-foreground focus:border-primary focus:ring-1 focus:ring-primary leading-relaxed"
           />
         </div>
 
-        {/* Evidence File Upload */}
+        {/* Evidence Upload */}
         <div>
-          <label className="block text-sm font-medium text-foreground">
-            Unggah Bukti Transaksi (Wajib 1 - 3 Berkas)
-          </label>
-          <p className="text-xs text-muted-foreground mt-0.5">
-            Format: JPG, PNG, atau WebP. Maksimal 2MB per file.
+          <div className="flex items-center justify-between">
+            <label className="block text-xs font-bold text-foreground uppercase tracking-wider">
+              Unggah Bukti Transfer & Chat ({MIN_EVIDENCE_FILES} - {MAX_EVIDENCE_FILES} Berkas)
+            </label>
+            <span className="text-[11px] text-muted-foreground font-mono">
+              {files.length}/{MAX_EVIDENCE_FILES} Berkas
+            </span>
+          </div>
+          <p className="mt-1 text-[11px] text-muted-foreground">
+            Format yang didukung: JPG, PNG, atau WebP. Maksimal 2MB per file.
           </p>
 
-          <div className="mt-3">
+          <div className="mt-3 space-y-3">
             {files.length < MAX_EVIDENCE_FILES && (
               <label
                 htmlFor="file-upload"
-                className="flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-border/80 bg-secondary/30 p-6 text-center transition hover:border-primary hover:bg-secondary/60"
+                className="flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-border bg-secondary/30 p-6 text-center transition hover:border-primary hover:bg-secondary/60"
               >
-                <UploadCloud className="h-8 w-8 text-primary" />
-                <span className="mt-2 text-sm font-semibold text-foreground">
-                  Pilih atau seret gambar bukti ke sini
+                <UploadCloud className="h-7 w-7 text-primary mb-2" />
+                <span className="text-xs sm:text-sm font-semibold text-foreground">
+                  Klik untuk memilih atau seret gambar bukti ke sini
                 </span>
-                <span className="mt-1 text-xs text-muted-foreground">
-                  Screenshot bukti transfer / mutasi rekening & chat transaksi
+                <span className="mt-1 text-[11px] text-muted-foreground">
+                  Screenshot bukti mutasi / slip m-banking dan percakapan transaksi
                 </span>
                 <input
                   id="file-upload"
@@ -311,28 +345,25 @@ export default function ReportPage() {
               </label>
             )}
 
-            {/* Selected File Previews */}
+            {/* Uploaded File Previews */}
             {files.length > 0 && (
-              <div className="mt-3 space-y-2">
-                <p className="text-xs font-semibold text-foreground">
-                  File terpilih ({files.length}/{MAX_EVIDENCE_FILES}):
-                </p>
+              <div className="space-y-2">
                 {files.map((file, idx) => (
                   <div
                     key={`${file.name}-${idx}`}
                     className="flex items-center justify-between rounded-xl border border-border bg-secondary/40 px-3.5 py-2 text-xs"
                   >
                     <div className="flex items-center gap-2 truncate">
-                      <FileImage className="h-4 w-4 flex-shrink-0 text-muted-foreground" />
+                      <FileImage className="h-4 w-4 shrink-0 text-muted-foreground" />
                       <span className="truncate font-medium text-foreground">{file.name}</span>
-                      <span className="text-muted-foreground">
-                        ({(file.size / 1024).toFixed(1)} KB)
+                      <span className="text-[11px] text-muted-foreground font-mono">
+                        ({(file.size / 1024).toFixed(0)} KB)
                       </span>
                     </div>
                     <button
                       type="button"
                       onClick={() => removeFile(idx)}
-                      className="text-destructive hover:opacity-80 transition"
+                      className="text-destructive hover:opacity-80 p-1 transition"
                       aria-label={`Hapus file ${file.name}`}
                     >
                       <Trash2 className="h-4 w-4" />
@@ -344,12 +375,14 @@ export default function ReportPage() {
           </div>
         </div>
 
+        {/* Submit Button */}
         <button
           type="submit"
           disabled={loading || files.length < MIN_EVIDENCE_FILES}
-          className="w-full rounded-xl bg-primary py-3 text-sm font-bold text-primary-foreground shadow-soft transition hover:bg-primary/90 disabled:opacity-50"
+          className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-primary py-3 text-sm font-bold text-primary-foreground shadow-subtle transition hover:opacity-95 disabled:opacity-50"
         >
-          {loading ? "Mengirim Laporan..." : "Kirim Laporan"}
+          <ShieldCheck className="h-4 w-4" />
+          <span>{loading ? "Mengirimkan Laporan..." : "Kirim Laporan ke Antrean Kurasi"}</span>
         </button>
       </form>
     </div>
