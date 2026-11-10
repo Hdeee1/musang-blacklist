@@ -32,18 +32,19 @@ export async function middleware(request: NextRequest) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>429 - Terlalu Banyak Permintaan | Musang Blacklist</title>
   <style>
-    body { font-family: system-ui, -apple-system, sans-serif; background: #0f172a; color: #f8fafc; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 1rem; }
-    .card { background: #1e293b; border: 1px solid #334155; padding: 2rem; border-radius: 0.75rem; max-width: 450px; text-align: center; }
-    h1 { color: #f43f5e; font-size: 1.5rem; margin-bottom: 0.5rem; }
-    p { color: #94a3b8; font-size: 0.875rem; line-height: 1.5; }
-    a { display: inline-block; margin-top: 1.5rem; color: #38bdf8; text-decoration: none; font-weight: 500; }
+    body { font-family: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif; background: #faf9f5; color: #1e293b; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 1rem; }
+    .card { background: #ffffff; border: 1px solid #e2e8f0; padding: 2.5rem; border-radius: 1rem; max-width: 460px; text-align: center; box-shadow: 0 4px 20px -8px rgba(0,0,0,0.1); }
+    h1 { color: #e11d48; font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem; }
+    p { color: #64748b; font-size: 0.9rem; line-height: 1.5; margin-top: 0.75rem; }
+    a { display: inline-block; margin-top: 1.5rem; color: #0d9488; text-decoration: none; font-weight: 600; font-size: 0.875rem; }
+    a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
   <div class="card">
     <h1>429 — Terlalu Banyak Permintaan</h1>
     <p>Batas frekuensi pencarian publik telah terlampaui. Demi keamanan dan stabilitas layanan, silakan coba beberapa saat lagi.</p>
-    <a href="/">Kembali ke Beranda</a>
+    <a href="/">← Kembali ke Beranda</a>
   </div>
 </body>
 </html>`,

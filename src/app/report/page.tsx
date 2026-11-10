@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { AlertTriangle, CheckCircle2, FileImage, Trash2, UploadCloud } from "lucide-react";
 import { MAX_EVIDENCE_FILES, MIN_EVIDENCE_FILES, validateEvidenceFile } from "@/lib/validations";
 
@@ -113,10 +114,10 @@ export default function ReportPage() {
   return (
     <div className="mx-auto max-w-2xl py-6">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl dark:text-slate-100">
+        <h1 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
           Buat Laporan Penipuan
         </h1>
-        <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
+        <p className="mt-1 text-sm text-muted-foreground">
           Laporkan nomor rekening bank atau nomor WhatsApp terindikasi penipuan dengan bukti
           transaksi nyata.
         </p>
@@ -125,12 +126,12 @@ export default function ReportPage() {
       {/* Privacy Notice Box */}
       <div
         role="alert"
-        className="mb-6 rounded-xl border border-amber-300 bg-amber-50 p-4 text-amber-900 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-200"
+        className="mb-6 rounded-2xl border border-warning/30 bg-warning/10 p-4 text-warning-foreground shadow-soft"
       >
         <div className="flex items-start gap-3">
-          <AlertTriangle className="h-5 w-5 flex-shrink-0 text-amber-600 dark:text-amber-400" />
+          <AlertTriangle className="h-5 w-5 flex-shrink-0 text-warning mt-0.5" />
           <div className="text-xs leading-relaxed sm:text-sm">
-            <strong className="font-semibold block mb-0.5">
+            <strong className="font-bold block mb-0.5 text-foreground">
               PERINGATAN PRIVASI (KEBIJAKAN KETAT):
             </strong>
             Dilarang mengunggah identitas kependudukan sensitif (<strong>KTP, KK, SIM</strong>) atau
@@ -144,24 +145,24 @@ export default function ReportPage() {
       {successMessage && (
         <div
           role="status"
-          className="mb-6 rounded-xl border border-emerald-300 bg-emerald-50 p-4 text-emerald-900 dark:border-emerald-900 dark:bg-emerald-950/50 dark:text-emerald-200"
+          className="mb-6 rounded-2xl border border-success/30 bg-success/10 p-5 text-foreground shadow-soft"
         >
           <div className="flex items-start gap-3">
-            <CheckCircle2 className="h-5 w-5 flex-shrink-0 text-emerald-600 dark:text-emerald-400" />
+            <CheckCircle2 className="h-5 w-5 flex-shrink-0 text-success mt-0.5" />
             <div className="text-sm">
-              <p className="font-semibold">Sukses Mengirim Laporan</p>
-              <p className="mt-1 text-xs sm:text-sm">{successMessage}</p>
+              <p className="font-bold text-success">Sukses Mengirim Laporan</p>
+              <p className="mt-1 text-xs text-muted-foreground sm:text-sm">{successMessage}</p>
               <div className="mt-3 flex gap-3">
-                <a
+                <Link
                   href="/my-reports"
-                  className="rounded-md bg-emerald-700 px-3 py-1.5 text-xs font-medium text-white hover:bg-emerald-800"
+                  className="rounded-xl bg-primary px-4 py-1.5 text-xs font-semibold text-primary-foreground shadow-soft hover:bg-primary/90 transition"
                 >
                   Lihat Riwayat Laporan Saya
-                </a>
+                </Link>
                 <button
                   type="button"
                   onClick={() => setSuccessMessage(null)}
-                  className="rounded-md border border-emerald-300 px-3 py-1.5 text-xs font-medium hover:bg-emerald-100 dark:border-emerald-800 dark:hover:bg-emerald-900"
+                  className="rounded-xl border border-border px-3.5 py-1.5 text-xs font-medium text-foreground hover:bg-secondary transition"
                 >
                   Kirim Laporan Lain
                 </button>
@@ -174,30 +175,28 @@ export default function ReportPage() {
       {errorMessage && (
         <div
           role="alert"
-          className="mb-6 rounded-xl border border-red-300 bg-red-50 p-4 text-red-900 dark:border-red-900 dark:bg-red-950/50 dark:text-red-200"
+          className="mb-6 rounded-2xl border border-destructive/30 bg-destructive/10 p-4 text-destructive shadow-soft"
         >
-          <p className="text-sm font-semibold">Gagal Mengirim Laporan</p>
+          <p className="text-sm font-bold">Gagal Mengirim Laporan</p>
           <p className="mt-1 text-xs sm:text-sm">{errorMessage}</p>
         </div>
       )}
 
       <form
         onSubmit={handleSubmit}
-        className="space-y-6 rounded-xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900"
+        className="space-y-6 rounded-2xl border border-border bg-card p-6 shadow-card sm:p-8"
       >
         {/* Identifier Type */}
         <div>
-          <label className="block text-sm font-semibold text-slate-800 dark:text-slate-200">
-            Kategori Data Penipu
-          </label>
+          <label className="block text-sm font-bold text-foreground">Kategori Data Penipu</label>
           <div className="mt-2 grid grid-cols-2 gap-3">
             <button
               type="button"
               onClick={() => setIdentifierType("bank_account")}
-              className={`flex items-center justify-center rounded-lg border p-3 text-sm font-medium transition ${
+              className={`flex items-center justify-center rounded-xl border p-3 text-sm font-semibold transition ${
                 identifierType === "bank_account"
-                  ? "border-red-600 bg-red-50 text-red-700 dark:bg-red-950/40 dark:text-red-300"
-                  : "border-slate-200 text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
+                  ? "border-primary bg-primary/10 text-primary shadow-soft"
+                  : "border-border bg-secondary/40 text-muted-foreground hover:bg-secondary hover:text-foreground"
               }`}
             >
               Nomor Rekening Bank
@@ -205,10 +204,10 @@ export default function ReportPage() {
             <button
               type="button"
               onClick={() => setIdentifierType("whatsapp")}
-              className={`flex items-center justify-center rounded-lg border p-3 text-sm font-medium transition ${
+              className={`flex items-center justify-center rounded-xl border p-3 text-sm font-semibold transition ${
                 identifierType === "whatsapp"
-                  ? "border-red-600 bg-red-50 text-red-700 dark:bg-red-950/40 dark:text-red-300"
-                  : "border-slate-200 text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
+                  ? "border-primary bg-primary/10 text-primary shadow-soft"
+                  : "border-border bg-secondary/40 text-muted-foreground hover:bg-secondary hover:text-foreground"
               }`}
             >
               Nomor WhatsApp
@@ -219,10 +218,7 @@ export default function ReportPage() {
         {/* Bank Name (conditional) */}
         {identifierType === "bank_account" && (
           <div>
-            <label
-              htmlFor="bank-name"
-              className="block text-sm font-medium text-slate-700 dark:text-slate-300"
-            >
+            <label htmlFor="bank-name" className="block text-sm font-medium text-foreground">
               Nama Bank
             </label>
             <input
@@ -232,17 +228,14 @@ export default function ReportPage() {
               value={bankName}
               onChange={(e) => setBankName(e.target.value)}
               placeholder="Contoh: BCA, BRI, Mandiri, BNI, Seabank, Jago..."
-              className="mt-1 block w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
+              className="mt-1.5 block w-full rounded-xl border border-border bg-background px-3.5 py-2.5 text-sm text-foreground outline-none placeholder:text-muted-foreground focus:border-primary focus:ring-1 focus:ring-primary"
             />
           </div>
         )}
 
         {/* Identifier Value */}
         <div>
-          <label
-            htmlFor="identifier-value"
-            className="block text-sm font-medium text-slate-700 dark:text-slate-300"
-          >
+          <label htmlFor="identifier-value" className="block text-sm font-medium text-foreground">
             {identifierType === "bank_account" ? "Nomor Rekening Penipu" : "Nomor WhatsApp Penipu"}
           </label>
           <input
@@ -256,22 +249,19 @@ export default function ReportPage() {
                 ? "Contoh: 1234567890"
                 : "Contoh: 08123456789 atau +628123456789"
             }
-            className="mt-1 block w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
+            className="mt-1.5 block w-full rounded-xl border border-border bg-background px-3.5 py-2.5 text-sm text-foreground outline-none placeholder:text-muted-foreground focus:border-primary focus:ring-1 focus:ring-primary"
           />
         </div>
 
         {/* Chronology */}
         <div>
-          <div className="flex justify-between">
-            <label
-              htmlFor="chronology"
-              className="block text-sm font-medium text-slate-700 dark:text-slate-300"
-            >
+          <div className="flex justify-between items-center">
+            <label htmlFor="chronology" className="block text-sm font-medium text-foreground">
               Kronologi Kejadian Singkat
             </label>
             <span
               className={`text-xs ${
-                chronology.length < 20 ? "text-amber-600 dark:text-amber-400" : "text-slate-400"
+                chronology.length < 20 ? "text-warning" : "text-muted-foreground"
               }`}
             >
               {chronology.length}/2000 karakter (min. 20)
@@ -284,16 +274,16 @@ export default function ReportPage() {
             value={chronology}
             onChange={(e) => setChronology(e.target.value)}
             placeholder="Jelaskan secara ringkas transaksi yang dilakukan, barang/jasa yang dijanjikan, dan bagaimana penipuan terjadi..."
-            className="mt-1 block w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
+            className="mt-1.5 block w-full rounded-xl border border-border bg-background px-3.5 py-2.5 text-sm text-foreground outline-none placeholder:text-muted-foreground focus:border-primary focus:ring-1 focus:ring-primary"
           />
         </div>
 
         {/* Evidence File Upload */}
         <div>
-          <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">
+          <label className="block text-sm font-medium text-foreground">
             Unggah Bukti Transaksi (Wajib 1 - 3 Berkas)
           </label>
-          <p className="text-xs text-slate-500 dark:text-slate-400">
+          <p className="text-xs text-muted-foreground mt-0.5">
             Format: JPG, PNG, atau WebP. Maksimal 2MB per file.
           </p>
 
@@ -301,13 +291,13 @@ export default function ReportPage() {
             {files.length < MAX_EVIDENCE_FILES && (
               <label
                 htmlFor="file-upload"
-                className="flex cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-slate-300 p-5 text-center transition hover:border-red-500 dark:border-slate-700 dark:hover:border-red-500"
+                className="flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-border/80 bg-secondary/30 p-6 text-center transition hover:border-primary hover:bg-secondary/60"
               >
-                <UploadCloud className="h-8 w-8 text-slate-400" />
-                <span className="mt-2 text-sm font-medium text-slate-700 dark:text-slate-300">
+                <UploadCloud className="h-8 w-8 text-primary" />
+                <span className="mt-2 text-sm font-semibold text-foreground">
                   Pilih atau seret gambar bukti ke sini
                 </span>
-                <span className="mt-1 text-xs text-slate-500">
+                <span className="mt-1 text-xs text-muted-foreground">
                   Screenshot bukti transfer / mutasi rekening & chat transaksi
                 </span>
                 <input
@@ -324,25 +314,25 @@ export default function ReportPage() {
             {/* Selected File Previews */}
             {files.length > 0 && (
               <div className="mt-3 space-y-2">
-                <p className="text-xs font-medium text-slate-700 dark:text-slate-300">
+                <p className="text-xs font-semibold text-foreground">
                   File terpilih ({files.length}/{MAX_EVIDENCE_FILES}):
                 </p>
                 {files.map((file, idx) => (
                   <div
                     key={`${file.name}-${idx}`}
-                    className="flex items-center justify-between rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs dark:border-slate-700 dark:bg-slate-800"
+                    className="flex items-center justify-between rounded-xl border border-border bg-secondary/40 px-3.5 py-2 text-xs"
                   >
                     <div className="flex items-center gap-2 truncate">
-                      <FileImage className="h-4 w-4 flex-shrink-0 text-slate-500" />
-                      <span className="truncate font-medium text-slate-800 dark:text-slate-200">
-                        {file.name}
+                      <FileImage className="h-4 w-4 flex-shrink-0 text-muted-foreground" />
+                      <span className="truncate font-medium text-foreground">{file.name}</span>
+                      <span className="text-muted-foreground">
+                        ({(file.size / 1024).toFixed(1)} KB)
                       </span>
-                      <span className="text-slate-400">({(file.size / 1024).toFixed(1)} KB)</span>
                     </div>
                     <button
                       type="button"
                       onClick={() => removeFile(idx)}
-                      className="text-red-500 hover:text-red-700"
+                      className="text-destructive hover:opacity-80 transition"
                       aria-label={`Hapus file ${file.name}`}
                     >
                       <Trash2 className="h-4 w-4" />
@@ -357,7 +347,7 @@ export default function ReportPage() {
         <button
           type="submit"
           disabled={loading || files.length < MIN_EVIDENCE_FILES}
-          className="w-full rounded-lg bg-red-600 py-2.5 text-sm font-semibold text-white transition hover:bg-red-700 disabled:opacity-50"
+          className="w-full rounded-xl bg-primary py-3 text-sm font-bold text-primary-foreground shadow-soft transition hover:bg-primary/90 disabled:opacity-50"
         >
           {loading ? "Mengirim Laporan..." : "Kirim Laporan"}
         </button>

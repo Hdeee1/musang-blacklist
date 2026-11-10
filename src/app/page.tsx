@@ -1,19 +1,27 @@
+import Link from "next/link";
+import { Search } from "lucide-react";
+
 export default function HomePage() {
   return (
-    <div className="flex flex-col items-center justify-center py-12 text-center">
-      <span className="rounded-full bg-red-100 px-3 py-1 text-xs font-semibold text-red-700 dark:bg-red-950/60 dark:text-red-400">
+    <div className="flex flex-col items-center justify-center py-12 text-center sm:py-16">
+      <span className="inline-flex items-center rounded-full bg-brand/5 px-3.5 py-1 text-xs font-semibold uppercase tracking-widest text-primary ring-1 ring-inset ring-primary/20">
         Platform Reputasi P2P Komunitas
       </span>
-      <h1 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-5xl">
-        Cek Sebelum Transfer
+      <h1 className="mt-5 text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">
+        Cek Sebelum Kamu Transfer
       </h1>
-      <p className="mt-3 max-w-xl text-sm text-slate-600 sm:text-base dark:text-slate-400">
-        Verifikasi nomor rekening bank atau nomor WhatsApp untuk menghindari penipuan transaksi P2P
-        berdasarkan bukti laporan terverifikasi.
+      <p className="mx-auto mt-4 max-w-xl text-base text-muted-foreground">
+        Verifikasi nomor rekening bank atau nomor WhatsApp untuk memeriksa apakah pernah dilaporkan
+        sebagai penipu berdasarkan bukti transaksi nyata.
       </p>
 
-      <div className="mt-8 w-full max-w-xl rounded-xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900">
-        <form className="flex flex-col gap-3 sm:flex-row" action="/search" method="GET">
+      <div className="mt-8 w-full max-w-xl">
+        <form
+          action="/search"
+          method="GET"
+          className="flex items-center gap-2 rounded-2xl border border-border bg-card p-2 shadow-card transition-shadow hover:shadow-soft"
+        >
+          <Search className="ml-3 h-5 w-5 shrink-0 text-muted-foreground" />
           <label htmlFor="search-query" className="sr-only">
             Nomor Rekening atau Nomor WhatsApp
           </label>
@@ -22,31 +30,31 @@ export default function HomePage() {
             name="q"
             type="text"
             required
-            placeholder="Masukkan No. Rekening atau No. WA..."
-            className="w-full rounded-lg border border-slate-300 px-4 py-2.5 text-sm focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500 dark:border-slate-700 dark:bg-slate-800"
+            placeholder="Cari No. Rekening atau No. WhatsApp..."
+            className="w-full bg-transparent px-2 py-2.5 text-base text-foreground outline-none placeholder:text-muted-foreground"
           />
           <button
             type="submit"
-            className="rounded-lg bg-red-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-red-700"
+            className="inline-flex shrink-0 items-center justify-center rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-soft transition-colors hover:bg-primary/90"
           >
-            Cari
+            Cek Sekarang
           </button>
         </form>
 
-        <div className="mt-3 flex flex-wrap items-center justify-center gap-2 text-xs text-slate-500">
+        <div className="mt-4 flex flex-wrap items-center justify-center gap-2 text-xs text-muted-foreground">
           <span>Contoh cepat:</span>
-          <a
+          <Link
             href="/search?q=1234567890"
-            className="rounded bg-slate-100 px-2 py-0.5 font-mono text-slate-700 hover:text-red-600 dark:bg-slate-800 dark:text-slate-300"
+            className="rounded-lg border border-border/70 bg-secondary px-2.5 py-1 font-mono text-secondary-foreground transition hover:text-primary hover:border-primary/40"
           >
             1234567890 (BCA)
-          </a>
-          <a
+          </Link>
+          <Link
             href="/search?q=08123456789"
-            className="rounded bg-slate-100 px-2 py-0.5 font-mono text-slate-700 hover:text-red-600 dark:bg-slate-800 dark:text-slate-300"
+            className="rounded-lg border border-border/70 bg-secondary px-2.5 py-1 font-mono text-secondary-foreground transition hover:text-primary hover:border-primary/40"
           >
             08123456789 (WA)
-          </a>
+          </Link>
         </div>
       </div>
     </div>
