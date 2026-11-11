@@ -27,7 +27,9 @@ export default function LoginPage() {
       const data = await res.json();
 
       if (!res.ok) {
-        setErrorMessage(data.detail || "Gagal masuk ke akun. Silakan periksa kembali email dan password.");
+        setErrorMessage(
+          data.detail || "Gagal masuk ke akun. Silakan periksa kembali email dan password.",
+        );
         return;
       }
 
@@ -47,9 +49,7 @@ export default function LoginPage() {
           <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-xl bg-brand text-brand-foreground shadow-subtle ring-1 ring-border">
             <Lock className="h-5 w-5 text-primary" />
           </div>
-          <h1 className="text-2xl font-extrabold tracking-tight text-foreground">
-            Masuk ke Akun
-          </h1>
+          <h1 className="text-2xl font-extrabold tracking-tight text-foreground">Masuk ke Akun</h1>
           <p className="text-xs text-muted-foreground leading-relaxed">
             Masuk untuk mengirimkan laporan penipuan atau memantau status laporan Anda.
           </p>
@@ -67,7 +67,10 @@ export default function LoginPage() {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="email" className="block text-xs font-bold uppercase tracking-wider text-foreground">
+            <label
+              htmlFor="email"
+              className="block text-xs font-bold uppercase tracking-wider text-foreground"
+            >
               Alamat Email
             </label>
             <input
@@ -83,7 +86,10 @@ export default function LoginPage() {
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-xs font-bold uppercase tracking-wider text-foreground">
+            <label
+              htmlFor="password"
+              className="block text-xs font-bold uppercase tracking-wider text-foreground"
+            >
               Password
             </label>
             <input

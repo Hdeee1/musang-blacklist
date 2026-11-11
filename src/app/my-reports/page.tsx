@@ -66,7 +66,8 @@ export default function MyReportsPage() {
             Riwayat Laporan Saya
           </h1>
           <p className="mt-1 text-xs sm:text-sm text-muted-foreground">
-            Daftar laporan penipuan yang telah Anda kirimkan dan status evaluasinya oleh tim kurator.
+            Daftar laporan penipuan yang telah Anda kirimkan dan status evaluasinya oleh tim
+            kurator.
           </p>
         </div>
         <Link
@@ -97,7 +98,8 @@ export default function MyReportsPage() {
           </div>
           <h2 className="text-base font-bold text-foreground">Belum Ada Laporan Terkirim</h2>
           <p className="mx-auto max-w-md text-xs text-muted-foreground leading-relaxed">
-            Anda belum pernah mengirimkan laporan penipuan. Kontribusi bukti transfer Anda sangat membantu mencegah korban penipuan berikutnya.
+            Anda belum pernah mengirimkan laporan penipuan. Kontribusi bukti transfer Anda sangat
+            membantu mencegah korban penipuan berikutnya.
           </p>
           <div className="pt-2">
             <Link

@@ -80,8 +80,9 @@ export default async function RootLayout({
                   </span>
                 </div>
                 <p className="text-xs leading-relaxed text-muted-foreground max-w-md">
-                  Inisiatif komunitas untuk transparansi dan pencegahan penipuan transaksi P2P
-                  di Indonesia. Setiap laporan divalidasi oleh bukti transfer dan tangkapan layar transaksi nyata.
+                  Inisiatif komunitas untuk transparansi dan pencegahan penipuan transaksi P2P di
+                  Indonesia. Setiap laporan divalidasi oleh bukti transfer dan tangkapan layar
+                  transaksi nyata.
                 </p>
                 <div className="flex flex-wrap items-center gap-2 pt-1 text-[11px] text-muted-foreground">
                   <span className="inline-flex items-center gap-1 rounded bg-secondary px-2 py-0.5 font-medium text-secondary-foreground">
@@ -119,8 +120,9 @@ export default async function RootLayout({
               <div className="md:col-span-3 space-y-2">
                 <h3 className="text-xs font-bold text-foreground">Kebijakan Privasi</h3>
                 <p className="text-[11px] leading-relaxed text-muted-foreground">
-                  Musang Blacklist menolak dan melarang keras pengunggahan dokumen kependudukan pribadi.
-                  Hanya rekam jejak finansial yang diverifikasi untuk melindungi sesama pembeli online.
+                  Musang Blacklist menolak dan melarang keras pengunggahan dokumen kependudukan
+                  pribadi. Hanya rekam jejak finansial yang diverifikasi untuk melindungi sesama
+                  pembeli online.
                 </p>
               </div>
             </div>

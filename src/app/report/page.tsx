@@ -72,7 +72,9 @@ export default function ReportPage() {
     }
 
     if (chronology.trim().length < 20) {
-      setErrorMessage("Kronologi kejadian minimal 20 karakter agar kronologi dapat dipahami jelas oleh kurator.");
+      setErrorMessage(
+        "Kronologi kejadian minimal 20 karakter agar kronologi dapat dipahami jelas oleh kurator.",
+      );
       return;
     }
 
@@ -127,7 +129,8 @@ export default function ReportPage() {
           Formulir Pelaporan Penipuan
         </h1>
         <p className="mt-1.5 text-xs sm:text-sm text-muted-foreground leading-relaxed">
-          Laporkan nomor rekening bank atau nomor WhatsApp penipu dengan melampirkan bukti transfer dan bukti percakapan jual beli riil.
+          Laporkan nomor rekening bank atau nomor WhatsApp penipu dengan melampirkan bukti transfer
+          dan bukti percakapan jual beli riil.
         </p>
       </div>
 
@@ -143,7 +146,9 @@ export default function ReportPage() {
               Kebijakan Privasi & Anti-Doxxing (Wajib Dipatuhi):
             </strong>
             <p className="text-muted-foreground">
-              Musang Blacklist <strong>menolak keras</strong> pengunggahan foto identitas pribadi (KTP, KK, SIM) maupun foto wajah/selfie orang lain. Laporan wajib berfokus murni pada bukti finansial:
+              Musang Blacklist <strong>menolak keras</strong> pengunggahan foto identitas pribadi
+              (KTP, KK, SIM) maupun foto wajah/selfie orang lain. Laporan wajib berfokus murni pada
+              bukti finansial:
             </p>
             <ul className="list-disc list-inside text-muted-foreground space-y-0.5 pt-1">
               <li>Tangkapan layar mutasi / m-banking / struk transfer ATM</li>
@@ -242,7 +247,10 @@ export default function ReportPage() {
         {/* Bank Name (conditional) */}
         {identifierType === "bank_account" && (
           <div>
-            <label htmlFor="bank-name" className="block text-xs font-bold text-foreground uppercase tracking-wider">
+            <label
+              htmlFor="bank-name"
+              className="block text-xs font-bold text-foreground uppercase tracking-wider"
+            >
               Nama Bank Penipu
             </label>
             <input
@@ -259,7 +267,10 @@ export default function ReportPage() {
 
         {/* Identifier Value */}
         <div>
-          <label htmlFor="identifier-value" className="block text-xs font-bold text-foreground uppercase tracking-wider">
+          <label
+            htmlFor="identifier-value"
+            className="block text-xs font-bold text-foreground uppercase tracking-wider"
+          >
             {identifierType === "bank_account" ? "Nomor Rekening Bank" : "Nomor WhatsApp Pelaku"}
           </label>
           <input
@@ -285,7 +296,10 @@ export default function ReportPage() {
         {/* Chronology */}
         <div>
           <div className="flex justify-between items-center mb-1">
-            <label htmlFor="chronology" className="block text-xs font-bold text-foreground uppercase tracking-wider">
+            <label
+              htmlFor="chronology"
+              className="block text-xs font-bold text-foreground uppercase tracking-wider"
+            >
               Kronologi Kejadian Transaksi
             </label>
             <span

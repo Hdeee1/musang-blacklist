@@ -17,8 +17,8 @@ export default function HomePage() {
         </h1>
 
         <p className="mt-4 text-base sm:text-lg leading-relaxed text-muted-foreground max-w-2xl">
-          Verifikasi nomor rekening bank atau nomor WhatsApp penjual sebelum mengirim uang.
-          Setiap entri blacklist didukung oleh bukti transfer nyata dan diverifikasi oleh tim kurator.
+          Verifikasi nomor rekening bank atau nomor WhatsApp penjual sebelum mengirim uang. Setiap
+          entri blacklist didukung oleh bukti transfer nyata dan diverifikasi oleh tim kurator.
         </p>
 
         {/* Search Console Component */}
@@ -34,7 +34,8 @@ export default function HomePage() {
             Standar Integritas & Validasi Bukti
           </h2>
           <p className="mt-2 text-sm text-muted-foreground">
-            Musang Blacklist bukan forum tuduhan anonim. Kami menerapkan kurasi ketat untuk menjaga keadilan dan akurasi data.
+            Musang Blacklist bukan forum tuduhan anonim. Kami menerapkan kurasi ketat untuk menjaga
+            keadilan dan akurasi data.
           </p>
         </div>
 
@@ -46,7 +47,8 @@ export default function HomePage() {
               </div>
               <h3 className="text-base font-bold text-foreground">Bukti Transaksi Nyata</h3>
               <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-                Setiap laporan wajib melampirkan tangkapan layar mutasi bank, struk transfer ATM/m-banking, serta bukti percakapan jual beli yang tidak terputus.
+                Setiap laporan wajib melampirkan tangkapan layar mutasi bank, struk transfer
+                ATM/m-banking, serta bukti percakapan jual beli yang tidak terputus.
               </p>
             </div>
             <div className="mt-4 pt-4 border-t border-border/60 text-[11px] font-medium text-primary">
@@ -61,7 +63,8 @@ export default function HomePage() {
               </div>
               <h3 className="text-base font-bold text-foreground">Perlindungan Privasi Ketat</h3>
               <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-                Kebijakan anti-doxxing: sistem melarang dan menolak pengunggahan KTP, KK, SIM, atau foto wajah. Fokus murni pada nomor rekening dan kontak penipu.
+                Kebijakan anti-doxxing: sistem melarang dan menolak pengunggahan KTP, KK, SIM, atau
+                foto wajah. Fokus murni pada nomor rekening dan kontak penipu.
               </p>
             </div>
             <div className="mt-4 pt-4 border-t border-border/60 text-[11px] font-medium text-success">
@@ -76,7 +79,8 @@ export default function HomePage() {
               </div>
               <h3 className="text-base font-bold text-foreground">Kurasi Tim Independen</h3>
               <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-                Laporan tidak langsung terbit otomatis. Moderator mengevaluasi bukti secara cermat untuk memastikan tidak ada laporan palsu atau perselisihan sepihak.
+                Laporan tidak langsung terbit otomatis. Moderator mengevaluasi bukti secara cermat
+                untuk memastikan tidak ada laporan palsu atau perselisihan sepihak.
               </p>
             </div>
             <div className="mt-4 pt-4 border-t border-border/60 text-[11px] font-medium text-warning">
@@ -94,7 +98,8 @@ export default function HomePage() {
             Langkah Pencegahan Sebelum Mengirimkan Uang
           </h2>
           <p className="mt-2 text-xs sm:text-sm text-muted-foreground leading-relaxed">
-            Mayoritas penipuan jual beli di media sosial memanfaatkan kelengahan pembeli saat mentransfer langsung ke rekening pribadi penjual yang belum dikenal.
+            Mayoritas penipuan jual beli di media sosial memanfaatkan kelengahan pembeli saat
+            mentransfer langsung ke rekening pribadi penjual yang belum dikenal.
           </p>
 
           <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -104,7 +109,8 @@ export default function HomePage() {
               </span>
               <h4 className="text-xs font-bold text-foreground">Minta Data Lengkap</h4>
               <p className="mt-1 text-[11px] text-muted-foreground leading-relaxed">
-                Minta nama bank, nomor rekening, dan nama pemilik rekening secara jelas tanpa singkatan.
+                Minta nama bank, nomor rekening, dan nama pemilik rekening secara jelas tanpa
+                singkatan.
               </p>
             </div>
 
@@ -114,7 +120,8 @@ export default function HomePage() {
               </span>
               <h4 className="text-xs font-bold text-foreground">Cek Rekam Jejak</h4>
               <p className="mt-1 text-[11px] text-muted-foreground leading-relaxed">
-                Masukkan nomor rekening dan WhatsApp di Musang Blacklist untuk memeriksa riwayat laporan korban terdahulu.
+                Masukkan nomor rekening dan WhatsApp di Musang Blacklist untuk memeriksa riwayat
+                laporan korban terdahulu.
               </p>
             </div>
 
@@ -124,7 +131,8 @@ export default function HomePage() {
               </span>
               <h4 className="text-xs font-bold text-foreground">Gunakan Rekber</h4>
               <p className="mt-1 text-[11px] text-muted-foreground leading-relaxed">
-                Jika nilai transaksi besar atau penjual mendesak pembayaran cepat, selalu gunakan Rekening Bersama tepercaya.
+                Jika nilai transaksi besar atau penjual mendesak pembayaran cepat, selalu gunakan
+                Rekening Bersama tepercaya.
               </p>
             </div>
           </div>
@@ -142,7 +150,8 @@ export default function HomePage() {
             Bantu Lindungi Pembeli Lain dengan Melaporkan Bukti Transaksi
           </h3>
           <p className="text-xs text-muted-foreground leading-relaxed">
-            Laporkan nomor rekening atau nomor WhatsApp pelaku penipuan disertai bukti mutasi transfer Anda. Laporan Anda menyelamatkan calon korban berikutnya.
+            Laporkan nomor rekening atau nomor WhatsApp pelaku penipuan disertai bukti mutasi
+            transfer Anda. Laporan Anda menyelamatkan calon korban berikutnya.
           </p>
         </div>
 

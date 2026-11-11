@@ -81,7 +81,8 @@ export default async function BlacklistDetailPage({ params }: BlacklistDetailPag
               REKAM JEJAK PENIPUAN TERBUKTI
             </h1>
             <p className="mt-1.5 text-xs sm:text-sm leading-relaxed text-foreground">
-              Entri ini telah diputuskan valid oleh tim moderasi berdasarkan bukti transfer finansial nyata dari korban.
+              Entri ini telah diputuskan valid oleh tim moderasi berdasarkan bukti transfer
+              finansial nyata dari korban.
             </p>
           </div>
         </div>
@@ -142,9 +143,7 @@ export default async function BlacklistDetailPage({ params }: BlacklistDetailPag
                 className="rounded-xl border border-border bg-secondary/30 p-4 space-y-3"
               >
                 <div className="flex items-center justify-between text-xs text-muted-foreground">
-                  <span className="font-bold text-foreground">
-                    Laporan Korban #{idx + 1}
-                  </span>
+                  <span className="font-bold text-foreground">Laporan Korban #{idx + 1}</span>
                   <span>{new Date(rep.createdAt).toLocaleDateString("id-ID")}</span>
                 </div>
 
@@ -184,7 +183,8 @@ export default async function BlacklistDetailPage({ params }: BlacklistDetailPag
         {/* Actions footer */}
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 border-t border-border/80 pt-5">
           <p className="text-xs text-muted-foreground">
-            Bantu sesama pembeli online: bagikan halaman ini saat mendapati nomor ini digunakan kembali.
+            Bantu sesama pembeli online: bagikan halaman ini saat mendapati nomor ini digunakan
+            kembali.
           </p>
 
           <Link

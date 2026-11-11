@@ -49,7 +49,8 @@ export default async function SearchResultPage({ searchParams }: SearchPageProps
           Pemeriksaan Rekam Jejak Penipuan
         </h1>
         <p className="mt-2 text-sm text-muted-foreground">
-          Masukkan nomor rekening bank atau nomor WhatsApp yang ingin Anda periksa sebelum melakukan transfer.
+          Masukkan nomor rekening bank atau nomor WhatsApp yang ingin Anda periksa sebelum melakukan
+          transfer.
         </p>
         <div className="mt-6">
           <form
@@ -126,7 +127,8 @@ export default async function SearchResultPage({ searchParams }: SearchPageProps
                   JANGAN LAKUKAN TRANSFER KE NOMOR INI
                 </h1>
                 <p className="mt-1.5 text-xs sm:text-sm leading-relaxed text-foreground">
-                  Nomor ini memiliki rekam jejak penipuan terkonfirmasi oleh tim kami berdasarkan bukti slip transfer bank dan percakapan nyata dari para korban.
+                  Nomor ini memiliki rekam jejak penipuan terkonfirmasi oleh tim kami berdasarkan
+                  bukti slip transfer bank dan percakapan nyata dari para korban.
                 </p>
               </div>
             </div>
@@ -191,9 +193,7 @@ export default async function SearchResultPage({ searchParams }: SearchPageProps
                       className="rounded-xl border border-border bg-secondary/30 p-4 space-y-3"
                     >
                       <div className="flex items-center justify-between text-xs text-muted-foreground">
-                        <span className="font-bold text-foreground">
-                          Laporan Kasus #{idx + 1}
-                        </span>
+                        <span className="font-bold text-foreground">Laporan Kasus #{idx + 1}</span>
                         <span>{new Date(rep.createdAt).toLocaleDateString("id-ID")}</span>
                       </div>
 
@@ -263,7 +263,8 @@ export default async function SearchResultPage({ searchParams }: SearchPageProps
               {result.query}
             </h1>
             <p className="mx-auto mt-2 max-w-lg text-xs sm:text-sm leading-relaxed text-muted-foreground">
-              Nomor rekening atau nomor WhatsApp ini belum pernah dilaporkan atau belum masuk dalam data penipuan terkonfirmasi kami.
+              Nomor rekening atau nomor WhatsApp ini belum pernah dilaporkan atau belum masuk dalam
+              data penipuan terkonfirmasi kami.
             </p>
           </div>
 
@@ -271,11 +272,14 @@ export default async function SearchResultPage({ searchParams }: SearchPageProps
             <div className="flex items-start gap-2.5">
               <CheckCircle2 className="h-4 w-4 shrink-0 text-success mt-0.5" />
               <div>
-                <strong className="text-foreground">Kewaspadaan Tetap Diperlukan:</strong> Status belum tercatat bukan jaminan mutlak 100% aman. Pelaku penipuan online kerap berganti nomor rekening baru atau meminjam rekening pihak ketiga.
+                <strong className="text-foreground">Kewaspadaan Tetap Diperlukan:</strong> Status
+                belum tercatat bukan jaminan mutlak 100% aman. Pelaku penipuan online kerap berganti
+                nomor rekening baru atau meminjam rekening pihak ketiga.
               </div>
             </div>
             <div className="text-[11px] text-muted-foreground pl-6">
-              Selalu gunakan rekening bersama (Rekber) independen tepercaya atau sistem escrow resmi marketplace saat bertransaksi P2P.
+              Selalu gunakan rekening bersama (Rekber) independen tepercaya atau sistem escrow resmi
+              marketplace saat bertransaksi P2P.
             </div>
           </div>
 

@@ -39,7 +39,9 @@ export default function RegisterPage() {
       const data = await res.json();
 
       if (!res.ok) {
-        setErrorMessage(data.detail || "Gagal melakukan pendaftaran. Silakan periksa kembali formulir.");
+        setErrorMessage(
+          data.detail || "Gagal melakukan pendaftaran. Silakan periksa kembali formulir.",
+        );
         return;
       }
 
@@ -63,7 +65,8 @@ export default function RegisterPage() {
             Buat Akun Pelapor
           </h1>
           <p className="text-xs text-muted-foreground leading-relaxed">
-            Daftar untuk berkontribusi melaporkan rekening & nomor WhatsApp penipu secara terverifikasi.
+            Daftar untuk berkontribusi melaporkan rekening & nomor WhatsApp penipu secara
+            terverifikasi.
           </p>
         </div>
 
@@ -79,7 +82,10 @@ export default function RegisterPage() {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="email" className="block text-xs font-bold uppercase tracking-wider text-foreground">
+            <label
+              htmlFor="email"
+              className="block text-xs font-bold uppercase tracking-wider text-foreground"
+            >
               Alamat Email
             </label>
             <input
@@ -95,7 +101,10 @@ export default function RegisterPage() {
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-xs font-bold uppercase tracking-wider text-foreground">
+            <label
+              htmlFor="password"
+              className="block text-xs font-bold uppercase tracking-wider text-foreground"
+            >
               Password (min. 8 karakter)
             </label>
             <input
@@ -111,7 +120,10 @@ export default function RegisterPage() {
           </div>
 
           <div>
-            <label htmlFor="confirm-password" className="block text-xs font-bold uppercase tracking-wider text-foreground">
+            <label
+              htmlFor="confirm-password"
+              className="block text-xs font-bold uppercase tracking-wider text-foreground"
+            >
               Konfirmasi Password
             </label>
             <input

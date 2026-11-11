@@ -139,7 +139,8 @@ export default function AdminModerationPage() {
             </h1>
           </div>
           <p className="mt-1 text-xs sm:text-sm text-muted-foreground">
-            Evaluasi bukti transfer finansial & percakapan sebelum entri blacklist dipublikasikan secara terbuka.
+            Evaluasi bukti transfer finansial & percakapan sebelum entri blacklist dipublikasikan
+            secara terbuka.
           </p>
         </div>
       </div>
@@ -377,11 +378,9 @@ export default function AdminModerationPage() {
                       }
                       className="h-4 w-4 rounded border-border text-primary focus:ring-primary"
                     />
-                    <label
-                      htmlFor={`spam-${report.id}`}
-                      className="text-xs text-muted-foreground"
-                    >
-                      Tandai sebagai laporan palsu / spam (mengurangi 20 poin reputasi pelapor bila ditolak)
+                    <label htmlFor={`spam-${report.id}`} className="text-xs text-muted-foreground">
+                      Tandai sebagai laporan palsu / spam (mengurangi 20 poin reputasi pelapor bila
+                      ditolak)
                     </label>
                   </div>
 
@@ -393,7 +392,11 @@ export default function AdminModerationPage() {
                       className="inline-flex items-center gap-1.5 rounded-lg bg-success px-4 py-2 text-xs font-bold text-success-foreground shadow-subtle transition hover:opacity-95 disabled:opacity-50"
                     >
                       <ShieldCheck className="h-4 w-4" />
-                      <span>{actionLoading[report.id] ? "Memproses..." : "Setujui & Publikasikan Blacklist"}</span>
+                      <span>
+                        {actionLoading[report.id]
+                          ? "Memproses..."
+                          : "Setujui & Publikasikan Blacklist"}
+                      </span>
                     </button>
 
                     <button
@@ -403,7 +406,9 @@ export default function AdminModerationPage() {
                       className="inline-flex items-center gap-1.5 rounded-lg border border-destructive/40 bg-card px-4 py-2 text-xs font-bold text-destructive shadow-subtle transition hover:bg-destructive/10 disabled:opacity-50"
                     >
                       <XCircle className="h-4 w-4" />
-                      <span>{actionLoading[report.id] ? "Memproses..." : "Tolak & Arsipkan Laporan"}</span>
+                      <span>
+                        {actionLoading[report.id] ? "Memproses..." : "Tolak & Arsipkan Laporan"}
+                      </span>
                     </button>
                   </div>
                 </div>
