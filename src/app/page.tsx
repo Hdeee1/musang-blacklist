@@ -154,7 +154,7 @@ export default function HomePage() {
             transfer Anda. Laporan Anda menyelamatkan calon korban berikutnya.
           </p>
         </div>
-
+    
         <Link
           href="/report"
           className="inline-flex items-center gap-2 shrink-0 rounded-xl bg-destructive px-5 py-3 text-xs sm:text-sm font-bold text-destructive-foreground shadow-subtle transition hover:opacity-90"
